@@ -16,7 +16,7 @@ class CipherAnalysis:
 
     @staticmethod
     def caesar_frequency_analysis(ciphertext, language_frequencies):
-        shift_range = range(1, 33) if language_frequencies == languages.russian_frequencies else range(1, 27)
+        shift_range = range(1, 33) if language_frequencies == frequency_languages.russian_frequencies else range(1, 27)
 
         best_shift = None
         best_score = float('-inf')
@@ -26,7 +26,7 @@ class CipherAnalysis:
             for char in ciphertext:
                 if char.isalpha():
                     shifted_char = chr(((ord(char.lower()) - ord('а') - shift) % 32) + ord('а')) \
-                        if language_frequencies == languages.russian_frequencies \
+                        if language_frequencies == frequency_languages.russian_frequencies \
                         else chr(((ord(char.lower()) - ord('a') - shift) % 26) + ord('a'))
                     decrypted_text += shifted_char if char.islower() else shifted_char.upper()
                 else:
