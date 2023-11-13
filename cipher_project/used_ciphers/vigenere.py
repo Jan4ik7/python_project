@@ -1,4 +1,6 @@
 class VigenereCipher:
+
+    @staticmethod
     def encrypt(text, key, russian=False, ascii_range=False):
         result = ''
         key_length = len(key)
@@ -35,6 +37,7 @@ class VigenereCipher:
 
         return result
 
+    @staticmethod
     def decrypt(ciphertext, key, russian=False, ascii_range=False):
         result = ''
         key_length = len(key)
@@ -72,6 +75,7 @@ class VigenereCipher:
 
         return result
 
+    @staticmethod
     def encrypt_vigenere(input_file, output_file, key, russian, ascii_range):
         with open(input_file, 'r', encoding='utf-8') as file:
             plaintext = file.read()
@@ -79,6 +83,7 @@ class VigenereCipher:
         with open(output_file, 'w', encoding='utf-8') as file:
             file.write(encrypted_text)
 
+    @staticmethod
     def decrypt_vigenere(input_file, output_file, key, russian, ascii_range):
         with open(input_file, 'r', encoding='utf-8') as file:
             encrypted_text = file.read()

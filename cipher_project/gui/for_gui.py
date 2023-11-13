@@ -1,9 +1,10 @@
 import tkinter as tk
 from tkinter import filedialog
-from python_project.cipher_project.used_ciphers.caesar import  CaesarCipher
-from python_project.cipher_project.used_ciphers.vigenere import VigenereCipher
-from python_project.cipher_project.used_ciphers.vernam import  VernamCipher
-from python_project.cipher_project.used_ciphers import frequencies
+from cipher_project.used_ciphers.caesar import  CaesarCipher
+from cipher_project.used_ciphers.vigenere import VigenereCipher
+from cipher_project.used_ciphers.vernam import  VernamCipher
+from cipher_project.used_ciphers import frequency_languages
+from cipher_project.used_ciphers.frequencies import CipherAnalysis
 
 
 def open_file():
@@ -96,10 +97,10 @@ def process_vernam():
     key = key_entry.get()
 
     if encrypt_var.get():
-        VernamCipher.vernam_cipher(input_file, output_file, key)
+        VernamCipher.encrypt_vernam(input_file, output_file, key)
         res_label.config(text="Vernam Encryption done! File saved as " + output_file)
     else:
-        VernamCipher.vernam_cipher(input_file, output_file, key)
+        VernamCipher.decrypt_vernam(input_file, output_file, key)
         res_label.config(text="Vernam Decryption done! File saved as " + output_file)
 
 
@@ -107,10 +108,10 @@ def analyze_button_clicked():
     ciphertext = input_text.get("1.0", "end-1c")
     language = selected_language.get()
     if language == "Russian":
-        language_frequencies = frequencies.russian_frequencies
+        language_frequencies = frequency_languages.russian_frequencies
     else:
-        language_frequencies = frequencies.english_frequencies
-    best_shift = frequencies.caesar_frequency_analysis(ciphertext, language_frequencies)
+        language_frequencies = frequency_languages.english_frequencies
+    best_shift = CipherAnalysis.caesar_frequency_analysis(ciphertext, language_frequencies)
     result_label.config(text=f"Best Shift: {best_shift}")
 def set_cipher_type(cipher_type):
     cipher_type_var.set(cipher_type)
@@ -132,9 +133,10 @@ frame_frequency_analysis.pack_forget()
 caesar_button = tk.Button(frame_choose_cipher, text="Caesar Cipher", command=lambda: [select_cipher("caesar"), set_cipher_type("caesar")], width=20)
 vigenere_button = tk.Button(frame_choose_cipher, text="Vigenere Cipher", command=lambda: [select_cipher("vigenere"), set_cipher_type("vigenere")], width=20)
 vernam_button = tk.Button(frame_choose_cipher, text="Vernam Cipher", command=lambda: [select_cipher("vernam"), set_cipher_type("vernam")], width=20)
-# Здесь добавьте кнопку "Анализ частоты"
+# Frequency Analysis button
 frequency_analysis_button = tk.Button(frame_choose_cipher, text="Frequency Analysis", command=show_frequency_analysis_scene, width=20)
 
+# Button to choose your mode
 caesar_button.grid(row=0, column=0, padx=10, pady=5)
 vigenere_button.grid(row=1, column=0, padx=10, pady=5)
 vernam_button.grid(row=2, column=0, padx=10, pady=5)
@@ -212,12 +214,15 @@ key_label.grid(row=10, column=0, sticky='w', padx=10, pady=5)
 key_entry = tk.Entry(frame2)
 key_entry.grid(row=11, column=0, padx=10, pady=5)
 
+# Back button added for main menu
 back_button = tk.Button(frame2, text="Back to Menu", command=go_back)
 back_button.grid(row=12, column=0, padx=10, pady=5)
 
+# Proccess button for ciphers
 process_button = tk.Button(frame2, text="Process", command=process)
 process_button.grid(row=12, column=1, padx=10, pady=5)
 
+# Result label added
 result_label = tk.Label(frame2, text="", bg='turquoise')
 result_label.grid(row=6, column=1)
 language_frame = tk.Frame(frame_frequency_analysis)
@@ -237,18 +242,18 @@ selected_language.set("Russian")
 language_dropdown = tk.OptionMenu(language_frame, selected_language, *languages)
 language_dropdown.pack(side="left")
 
-# Create a text input field
+# Text input field
 input_text_label = tk.Label(frame_frequency_analysis, text="Enter Ciphertext:")
 input_text_label.pack()
 
 input_text = tk.Text(frame_frequency_analysis, height=10, width=40)
 input_text.pack()
 
-# Create an 'Analyze' button
+# Analyze button int
 analyze_button = tk.Button(frame_frequency_analysis, text="Analyze", command=analyze_button_clicked)
 analyze_button.pack()
 
-# Create a label to display the result
+# Created label to display the result
 result_label = tk.Label(frame_frequency_analysis, text="")
 result_label.pack()
 
