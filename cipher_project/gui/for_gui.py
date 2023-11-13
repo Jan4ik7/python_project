@@ -205,7 +205,7 @@ russian_check = tk.Checkbutton(frame2, text="Russian Alphabet", variable=russian
 russian_check.grid(row=8, column=0, padx=10, pady=5)
 
 ascii_range_var = tk.BooleanVar()
-ascii_range_check = tk.Checkbutton(frame2, text="16-128 ASCII Range", variable=ascii_range_var, bg='turquoise', command=toggle_ascii_range)
+ascii_range_check = tk.Checkbutton(frame2, text="English Alphabet", variable=ascii_range_var, bg='turquoise', command=toggle_ascii_range)
 ascii_range_check.grid(row=9, column=0, padx=10, pady=5)
 
 key_label = tk.Label(frame2, text="Vigenere Key / Vernam Key:", bg='turquoise')
